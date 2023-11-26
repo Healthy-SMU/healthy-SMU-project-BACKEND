@@ -1,27 +1,21 @@
-const express = require("express");
-const app = express();
+const express = require("express"); 
+const { connectDb } = require('./src/config/connection.js') 
+var cors = require('cors') 
+const app = express(); 
+const dotenv = require("dotenv"); 
+dotenv.config(); 
+const port = process.env.PORT; 
 
-const port=5000;
- app.listen(port, (error)=>{ if(error){console.log("Server Failed")} 
- else{ console.log(`Server Started on port ${port}`)}
- })
- app.use(express.json());
+connectDb(); 
 
-    const users = [ 
-        { id: 1, name: "John" },
-        { id: 2, name: "Mary" },
-        { id: 3, name: "chris" },  
-    ];
-    app.get("/api", (req, res) => { res.status(200).json({ users: users });});
-
-
-
-
-
-
-
-
-
+app.use(cors())
+app.listen(port, (er) => {
+     if (er) { console.log(er); 
+    } else { 
+        console.log(`server is running on port ${port}`); } 
+    }); 
+    app.use(express.json()) 
+    //app.use("/api", require("./src/routes/api"));
 
 
 
