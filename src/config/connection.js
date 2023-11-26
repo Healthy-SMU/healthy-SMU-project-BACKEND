@@ -2,8 +2,8 @@ const Sequelize = require("sequelize");
 const dotenv = require("dotenv");
 const mysql = require("mysql2");
 dotenv.config();
-url=process.env.URL
-const sequelize=new Sequelize(url,{
+console.log("URL:", process.env.URL);
+const sequelize=new Sequelize(process.env.URL,{
     dialect: 'mysql' 
 });
 
