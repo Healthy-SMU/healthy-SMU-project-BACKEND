@@ -4,7 +4,7 @@ const cookieParser = require('cookie-parser');
 const checkJwtToken = function (req, res, next) {
   const jwttoken = req.cookies.token;
   //regular expression to check if path is towards login/signup
-  const isLoginOrSignup = /\/(LoginSignUp)$/i.test(req.path);
+  const isLoginOrSignup = /\/(login|signup)/.test(req.path);
 
 
 

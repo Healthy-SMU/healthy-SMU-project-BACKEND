@@ -9,14 +9,14 @@ const signup = async (req, res) => {
         lastname: req.body.lastname,
         password: req.body.password,
         phone_number: req.body.phone_number,
-        categrory: req.body.categrory,
+        category: req.body.category,
         career: req.body.career,
     };
      
         try {
             const Healthcare_professional_added = await Healthcare_professional.create(signup_object);
             console.log("Healthcare_professional Added:", Healthcare_professional_added.dataValues);
-            console.log("==================")
+            console.log("****************************************************************************************************")
         
             return res.status(200).json({
               msg: "Successfully added:",
@@ -24,7 +24,7 @@ const signup = async (req, res) => {
             });
           } catch (error) {
             console.error("Error creating Account:", error);
-            //send only relevant erros msg
+            //db error
             return res.status(500).json({ error: error });
             
           } 
@@ -34,9 +34,11 @@ const signup = async (req, res) => {
 
             const { email_address, password } = req.body;
   try {
-    //check username and password
-    const healthcare_professional = await Healthcare_professional.findByPk(email_address);
-    //no match or wrong psswd
+    //checkage
+    const healthcare_professional = await Healthcare_professional.findOne({
+      where: { email_address: email_address },
+    });
+    //no matching
     if (!healthcare_professional || healthcare_professional.password !== password) {
       return res.status(401).send("wrong username or password");
     }
@@ -46,7 +48,7 @@ const signup = async (req, res) => {
     const token = jwt.sign({email_address : healthcare_professional.email_address}, process.env.SECRET);
 
     res.cookie("token", token, { httpOnly: true });
-    console.log("==================")
+    console.log("****************************************************************************************************")
 
     return res.status(200).send("successful login ");
   } catch (error) {

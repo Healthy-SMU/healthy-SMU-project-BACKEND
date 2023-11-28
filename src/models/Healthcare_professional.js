@@ -8,6 +8,7 @@ const Healthcare_professional = sequelize.define(
         type: DataTypes.SMALLINT,
         allowNull: false,
         primaryKey: true,
+        autoIncrement: true,
       },
 
       email_address: {
@@ -50,7 +51,7 @@ const Healthcare_professional = sequelize.define(
     {
         tableName: "Healthcare_professional",
         timestamps: false,
-        underscored: true,
+        //underscored: true,
     }
     );
 

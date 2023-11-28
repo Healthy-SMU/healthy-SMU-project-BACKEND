@@ -9,6 +9,7 @@ const Follow_up = sequelize.define('Follow_up', {
       type: DataTypes.SMALLINT,
       allowNull: false,
       primaryKey: true,
+      autoIncrement: true,
     },
 
     appointmentID: {
@@ -25,7 +26,7 @@ const Follow_up = sequelize.define('Follow_up', {
   {
     tableName: 'follow_up',
     timestamps: false,
-    underscored: true,
+    //underscored: true,
   });
   
   // follow_up appointment association 

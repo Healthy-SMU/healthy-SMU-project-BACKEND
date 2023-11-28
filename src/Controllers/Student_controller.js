@@ -13,7 +13,7 @@ const signup = async (req, res) => {
         try {
             const Student_added = await Student.create(signup_object);
             console.log("Student Added:", Student_added.dataValues);
-            console.log("==================")
+            console.log("****************************************************************************************************")
         
             return res.status(200).json({
               msg: "Successfully added:",
@@ -21,7 +21,7 @@ const signup = async (req, res) => {
             });
           } catch (error) {
             console.error("Error creating Account:", error);
-            //send only relevant erros msg
+            //db error
             return res.status(500).json({ error: error });
             
           } 
@@ -31,9 +31,11 @@ const signup = async (req, res) => {
 
             const { email_address, password } = req.body;
   try {
-    //check username and password
-    const student = await Student.findByPk(email_address);
-    //no match or wrong psswd
+    //checkage
+    const student = await Student.findOne({
+      where: { email_address: email_address },
+    });
+    //no matching
     if (!student || student.password !== password) {
       return res.status(401).send("wrong username or password");
     }
@@ -43,7 +45,7 @@ const signup = async (req, res) => {
     const token = jwt.sign({email_address : student.email_address}, process.env.SECRET);
 
     res.cookie("token", token, { httpOnly: true });
-    console.log("==================")
+    console.log("****************************************************************************************************")
 
     return res.status(200).send("successful login ");
   } catch (error) {

@@ -8,6 +8,7 @@ const Timeslot = sequelize.define('Timeslot', {
     type: DataTypes.SMALLINT,
     allowNull: false,
     primaryKey: true,
+    autoIncrement: true,
   },
 
   healthcare_professionalID: {
@@ -36,7 +37,7 @@ const Timeslot = sequelize.define('Timeslot', {
   tableName: 'Timeslot',
   // primaryKey: { fields: ['timeslotID', 'healthcare_professionalID'] },
   timestamps: false,
-  underscored: true,
+  //underscored: true,
 });
 
 module.exports = {Timeslot} ;

@@ -38,18 +38,7 @@ app.all("/", (req, res) => {
   res.send("hello , homepage");
 });
 
-/*const server = app.listen(port, () => {
-  console.log("listening on " + port);
-});
 
-
-
-
-
-
-
-
-*/
 
 
 

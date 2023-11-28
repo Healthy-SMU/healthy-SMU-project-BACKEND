@@ -10,6 +10,7 @@ const Appointment = sequelize.define('Appointment', {
     type: DataTypes.SMALLINT,
     allowNull: false,
     primaryKey: true,
+    autoIncrement: true,
   },
 
   status: {
@@ -23,17 +24,12 @@ const Appointment = sequelize.define('Appointment', {
   },
 
   room_number: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
-
-  time: {
     type: DataTypes.STRING(20),
     allowNull: false,
   },
 
-  date: {
-    type: DataTypes.STRING(20),
+  date_time: {
+    type: DataTypes.DATE,
     allowNull: false,
   },
 
@@ -56,7 +52,7 @@ const Appointment = sequelize.define('Appointment', {
 {
     tableName: 'Appointment',
     timestamps: false,
-    underscored: true,
+    //underscored: true,
 }
 );
 
