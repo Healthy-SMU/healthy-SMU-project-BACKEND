@@ -8,6 +8,7 @@ const Student = sequelize.define(
         type: DataTypes.SMALLINT,
         allowNull: false,
         primaryKey: true,
+        autoIncrement: true,
       },
 
       email_address: {
@@ -40,7 +41,8 @@ const Student = sequelize.define(
     {
         tableName: "Student",
         timestamps: false,
-        underscored: true,
+        //underscored: true,
+        
     }
     );
 
