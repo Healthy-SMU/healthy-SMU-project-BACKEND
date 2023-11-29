@@ -17,15 +17,16 @@ const Timeslot = sequelize.define('Timeslot', {
     primaryKey: true,
   },
 
-  date: {
-    type: DataTypes.STRING(30),
+  date_and_time: {
+    type: DataTypes.DATE,
     allowNull: false,
   },
 
-  hour: {
-    type: DataTypes.STRING(30),
+  day: {
+    type: DataTypes.STRING(20),
     allowNull: false,
   },
+
 
   status: {
     type: DataTypes.STRING(50),
