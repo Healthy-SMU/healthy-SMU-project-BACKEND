@@ -31,6 +31,7 @@ const Appointment = sequelize.define('Appointment', {
   date_time: {
     type: DataTypes.DATE,
     allowNull: false,
+    field: 'time_and_date'
   },
 
   comment: {
@@ -57,7 +58,8 @@ const Appointment = sequelize.define('Appointment', {
 );
 
 // appointment student association 
-Student.hasMany(Appointment);
+Student.hasMany(Appointment, {
+  foreignKey: "studentID",});
 Appointment.belongsTo(Student, {
   foreignKey: "studentID",
   onDelete: "CASCADE",
@@ -65,7 +67,8 @@ Appointment.belongsTo(Student, {
 });
 
 // appointment healthcare_professional association
-Healthcare_professional.hasMany(Appointment);
+Healthcare_professional.hasMany(Appointment, {
+  foreignKey: "healthcare_professionalID",});
 Appointment.belongsTo(Healthcare_professional, {
   foreignKey: "healthcare_professionalID",
   onDelete: "CASCADE",
