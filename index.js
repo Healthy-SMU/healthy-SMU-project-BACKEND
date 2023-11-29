@@ -3,6 +3,7 @@ const cookieParser = require("cookie-parser");
 const { connectDb } = require('./src/config/connection.js') 
 const { Student_router } = require("./src/Routes/Student_router");
 const { Healthcare_professional_router } = require("./src/Routes/Healthcare_professional_router");
+const { Appointment_router } = require("./src/Routes/Appointment_router");
 const { checkJwtToken } = require("./src/JWToken");
 var cors = require('cors') 
 const app = express(); 
@@ -33,6 +34,7 @@ app.listen(port, (er) => {
 app.use(checkJwtToken);
 app.use("/api/Student/", Student_router);
 app.use("/api/Healthcare_professional", Healthcare_professional_router);
+app.use("/api/Appointment/", Appointment_router);
 
 app.all("/", (req, res) => {
   res.send("hello , homepage");
