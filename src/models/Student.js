@@ -17,13 +17,8 @@ const Student = sequelize.define(
         unique: true,
       },
 
-      firstname: {
-        type: DataTypes.STRING(20),
-        allowNull: false,
-      },
-
-      lastname: {
-        type: DataTypes.STRING(20),
+      fullname: {
+        type: DataTypes.STRING(40),
         allowNull: false,
       },
 

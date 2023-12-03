@@ -1,11 +1,25 @@
 const { Appointment } = require("../models/Appointment");
 const { Sequelize , DataTypes} = require("sequelize"); 
+const { Student } = require("../models/Student");
 //const jwt = require("jsonwebtoken");
 
 const booking = async (req, res) => {
     console.log("Appointment booking request received ");
+
+
+
+    try {
+      // Find Student
+      const student = await Student.findOne({
+        where: { email_address: req.body.email_address },
+      });
+  
+      if (!student) {
+        return res.status(404).json({ error: "Student not found." });
+      }
+
     const booking_object = {
-        studentID: req.body.studentID,
+        studentID: student.StudentID,
         healthcare_professionalID: req.body.healthcare_professionalID,
         date_time: req.body.date_time,
         room_number: req.body.room_number,
@@ -13,7 +27,7 @@ const booking = async (req, res) => {
         comment: req.body.comment,
         status: req.body.status, };
      
-        try {
+  
             const Appointment_booked = await Appointment.create(booking_object);
             console.log("Appointment Booked:", Appointment_booked.dataValues);
             console.log("****************************************************************************************************")
