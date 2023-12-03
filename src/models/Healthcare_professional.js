@@ -17,13 +17,8 @@ const Healthcare_professional = sequelize.define(
         unique: true,
       },
 
-      firstname: {
-        type: DataTypes.STRING(20),
-        allowNull: false,
-      },
-
-      lastname: {
-        type: DataTypes.STRING(20),
+      fullname: {
+        type: DataTypes.STRING(40),
         allowNull: false,
       },
 
@@ -38,8 +33,8 @@ const Healthcare_professional = sequelize.define(
       },
 
       career: {
-        type: DataTypes.STRING(500),
-        allowNull: false,
+        type: DataTypes.BLOB,
+        allowNull: true,
       },
 
       category: {
