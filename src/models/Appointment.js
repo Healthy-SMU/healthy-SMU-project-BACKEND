@@ -28,10 +28,16 @@ const Appointment = sequelize.define('Appointment', {
     allowNull: false,
   },
 
-  date_time: {
+  start_date_time: {
     type: DataTypes.DATE,
     allowNull: false,
-    field: 'time_and_date'
+    field: 'start_time_and_date'
+  },
+
+  end_date_time: {
+    type: DataTypes.DATE,
+    allowNull: false,
+    field: 'end_time_and_date'
   },
 
   comment: {

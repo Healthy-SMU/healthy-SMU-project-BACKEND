@@ -1,11 +1,11 @@
 const { Appointment } = require("../models/Appointment");
 const { Sequelize , DataTypes} = require("sequelize"); 
 const { Student } = require("../models/Student");
+const { sequelize } = require("../config/connection");
 //const jwt = require("jsonwebtoken");
 
 const booking = async (req, res) => {
     console.log("Appointment booking request received ");
-
 
 
     try {
@@ -21,7 +21,8 @@ const booking = async (req, res) => {
     const booking_object = {
         studentID: student.StudentID,
         healthcare_professionalID: req.body.healthcare_professionalID,
-        date_time: req.body.date_time,
+        start_date_time: req.body.start_date_time,
+        end_date_time: req.body.end_date_time,
         room_number: req.body.room_number,
         reason_of_appointment: req.body.reason_of_appointment,
         comment: req.body.comment,
@@ -43,27 +44,42 @@ const booking = async (req, res) => {
             
           } 
         };
+
+
           const history = async (req, res) => {
             console.log("history request received ");
 
             const { date } = req.body;
   try {
     //checkage
-    const appointment = await Appointment.findAll({
+    const appointments = await Appointment.findAll({
       where: Sequelize.where(
-        Sequelize.fn('DATE', Sequelize.col('time_and_date')),
+        Sequelize.fn('DATE', Sequelize.col('start_time_and_date')),
         '=',
         Sequelize.literal(`DATE('${date}')`)
       ),
     });
     //no matching
-    if (!appointment || appointment.length === 0) {
+    if (!appointments || appointments.length === 0) {
       return res.status(404).json({message: "No appointments at this date" });
     }
    
     // console.log("****************************************************************************************************")
 
-    return res.status(200).json({ message: "Today's appointments : ", appointment } );
+
+    for (const appointment of appointments) {
+      await sequelize.query('CALL UpdateAppointmentStatus(:appointmentID)', {
+        replacements: { appointmentID: appointment.appointmentID },
+      }).then(() => {
+        console.log(`Procedure executed successfully for appointmentID ${appointment.appointmentID}`);
+        return appointment.reload();
+      }).catch(err => {
+        console.error(`Error executing procedure for appointmentID ${appointment.appointmentID}:`, err);
+      });
+    }
+
+
+    return res.status(200).json({ message: "Today's appointments : ", appointments } );
   } catch (error) {
     //db error
     console.error("Error in history function:", error);
