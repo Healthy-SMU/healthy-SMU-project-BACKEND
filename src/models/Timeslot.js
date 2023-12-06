@@ -17,7 +17,12 @@ const Timeslot = sequelize.define('Timeslot', {
     primaryKey: true,
   },
 
-  date_and_time: {
+  start_date_and_time: {
+    type: DataTypes.DATE,
+    allowNull: false,
+  },
+
+  end_date_and_time: {
     type: DataTypes.DATE,
     allowNull: false,
   },
