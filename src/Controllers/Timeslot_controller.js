@@ -99,14 +99,16 @@ const Delete = async (req, res) => {
       }
   
       // Find and update the Timeslot
-      const date_and_time = req.body.date_and_time;
+      const start_date_and_time = req.body.start_date_and_time;
+      const end_date_and_time = req.body.end_date_and_time;
       const healthcare_professionalID = req.body.healthcare_professionalID;
 
   
       const existingTimeslot = await Timeslot.findOne({
         where: {
           healthcare_professionalID: healthcare_professional.healthcare_professionalID,
-          date_and_time: date_and_time,
+          start_date_and_time: start_date_and_time,
+          end_date_and_time: end_date_and_time,
         },
       });
   
@@ -115,10 +117,14 @@ const Delete = async (req, res) => {
       }
   
       // Update only the provided attributes
-      if (req.body.new_date_and_time) {
-        existingTimeslot.date_and_time = req.body.new_date_and_time;
+      if (req.body.new_start_date_and_time) {
+        existingTimeslot.start_date_and_time = req.body.new_start_date_and_time;
       }
-  
+      if (req.body.new_end_date_and_time) {
+        existingTimeslot.end_date_and_time = req.body.new_end_date_and_time;
+      }
+    
+
       if (req.body.new_day) {
         existingTimeslot.day = req.body.new_day;
       }
