@@ -2,6 +2,7 @@ const { Timeslot } = require("../models/Timeslot");
 const { Sequelize , DataTypes} = require("sequelize"); 
 const { Healthcare_professional } = require("../models/Healthcare_professional");
 
+
 //const jwt = require("jsonwebtoken");
 
 const Add = async (req, res) => {
@@ -25,7 +26,11 @@ const Add = async (req, res) => {
         day: req.body.day,
         status: req.body.status,    
     };
-     
+     /*
+    Sequelize Raw Query for creating a timeslot
+    INSERT INTO Timeslots (healthcare_professionalID, start_date_and_time, end_date_and_time, day, status)
+    VALUES (:healthcare_professionalID, :start_date_and_time, :end_date_and_time, :day, :status);
+    */
         
             const Timeslot_added = await Timeslot.create(TSAdd_object);
             console.log("Timeslot Booked:", Timeslot_added.dataValues);    
@@ -62,7 +67,12 @@ const Delete = async (req, res) => {
 
 
         const start_date_and_time = req.body.start_date_and_time;
-        
+        /*
+    Sequelize Raw Query for deleting a timeslot
+    DELETE FROM Timeslots
+    WHERE healthcare_professionalID = :healthcare_professionalID
+    AND start_date_and_time = :start_date_and_time;
+    */
   
       const deletedRows = await Timeslot.destroy({
         where: {
@@ -103,7 +113,14 @@ const Delete = async (req, res) => {
       const end_date_and_time = req.body.end_date_and_time;
       const healthcare_professionalID = req.body.healthcare_professionalID;
 
-  
+  /*
+    Sequelize Raw Query for updating a timeslot
+    UPDATE Timeslots
+    SET start_date_and_time = :new_start_date_and_time, end_date_and_time = :new_end_date_and_time, day = :new_day, status = :new_status
+    WHERE healthcare_professionalID = :healthcare_professionalID
+    AND start_date_and_time = :start_date_and_time
+    AND end_date_and_time = :end_date_and_time;
+    */
       const existingTimeslot = await Timeslot.findOne({
         where: {
           healthcare_professionalID: healthcare_professional.healthcare_professionalID,

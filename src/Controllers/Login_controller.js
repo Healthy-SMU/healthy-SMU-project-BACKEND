@@ -6,6 +6,10 @@ const login = async (req, res) => {
     console.log("login request received ");
 
     const { email_address, password } = req.body;
+/*
+    Sequelize Raw Query for checking login credentials in the Student table
+    SELECT * FROM Students WHERE email_address = :email_address AND password = :password;
+    */
 
     try {
         // Check in Student table
@@ -20,6 +24,10 @@ const login = async (req, res) => {
             res.cookie("token", token, { httpOnly: true });
             return res.status(200).send("Student logged in");
         }
+        /*
+    Sequelize Raw Query for checking login credentials in the Healthcare_professional table
+    SELECT * FROM Healthcare_professionals WHERE email_address = :email_address AND password = :password;
+    */
 
         // If not found in Student table, check in Healthcare_professional table
         user = await Healthcare_professional.findOne({

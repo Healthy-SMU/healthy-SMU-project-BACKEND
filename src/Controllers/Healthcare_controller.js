@@ -9,6 +9,11 @@ const signup = async (req, res) => {
         password: req.body.password,
         phone_number: req.body.phone_number,
         category: req.body.category,};
+/*
+    Sequelize Raw Query for creating a healthcare professional
+    INSERT INTO Healthcare_professionals (email_address, fullname, password, phone_number, category)
+    VALUES (:email_address, :fullname, :password, :phone_number, :category);
+    */
 
         const emailExists = await Healthcare_professional.findOne({
           where: { email_address: req.body.email_address }
@@ -63,7 +68,12 @@ const signup = async (req, res) => {
               mimetype: uploadedFile.mimetype,
               filename: uploadedFile.name,
             };
-
+/*
+    Sequelize Raw Query for updating the healthcare professional's career information
+    UPDATE Healthcare_professionals
+    SET career = { data: :uploadedFileData, mimetype: :uploadedFileMimetype, filename: :uploadedFileName }
+    WHERE email_address = :email_address;
+    */
             await healthcare_professional.save();
                   
             // Respond with success message

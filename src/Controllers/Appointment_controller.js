@@ -27,7 +27,11 @@ const booking = async (req, res) => {
         reason_of_appointment: req.body.reason_of_appointment,
         comment: req.body.comment,
         status: req.body.status, };
-     
+     /*
+    Sequelize Raw Query for creating an appointment
+    INSERT INTO Appointments (studentID, healthcare_professionalID, start_date_time, end_date_time, room_number, reason_of_appointment, comment, status)
+    VALUES (:studentID, :healthcare_professionalID, :start_date_time, :end_date_time, :room_number, :reason_of_appointment, :comment, :status);
+    */
   
             const Appointment_booked = await Appointment.create(booking_object);
             console.log("Appointment Booked:", Appointment_booked.dataValues);
@@ -50,6 +54,10 @@ const booking = async (req, res) => {
             console.log("history request received ");
 
             const { date } = req.body;
+             /*
+    Sequelize Raw Query for retrieving appointments on a specific date
+    SELECT * FROM Appointments WHERE DATE(start_time_and_date) = DATE(:date);
+    */
   try {
     //checkage
     const appointments = await Appointment.findAll({
@@ -66,7 +74,10 @@ const booking = async (req, res) => {
    
     // console.log("****************************************************************************************************")
 
-
+/*
+    Sequelize Raw Query for calling a stored procedure
+    CALL UpdateAppointmentStatus(:appointmentID);
+    */
     for (const appointment of appointments) {
       await sequelize.query('CALL UpdateAppointmentStatus(:appointmentID)', {
         replacements: { appointmentID: appointment.appointmentID },
