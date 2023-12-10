@@ -7,6 +7,7 @@ const { Healthcare_professional_router } = require("./src/Routes/Healthcare_prof
 const { Appointment_router } = require("./src/Routes/Appointment_router");
 const { Timeslot_router } = require("./src/Routes/Timeslot_router");
 const { Login_router } = require("./src/Routes/Login_router");
+const { Logout_router } = require("./src/Routes/Logout_router");
 const { checkJwtToken } = require("./src/JWToken");
 var cors = require('cors') 
 const app = express(); 
@@ -41,6 +42,7 @@ app.use("/api/Healthcare_professional", Healthcare_professional_router);
 app.use("/api/Appointment/", Appointment_router);
 app.use("/api/Timeslot/", Timeslot_router);
 app.use("/api/", Login_router);
+app.use("/api/", Logout_router);
 
 app.all("/", (req, res) => {
   res.send("hello , homepage");
