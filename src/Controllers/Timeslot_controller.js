@@ -33,11 +33,11 @@ const Add = async (req, res) => {
     */
         
             const Timeslot_added = await Timeslot.create(TSAdd_object);
-            console.log("Timeslot Booked:", Timeslot_added.dataValues);    
+            console.log("Timeslot Added:", Timeslot_added.dataValues);    
             console.log("****************************************************************************************************")
         
             return res.status(200).json({
-              msg: "Timeslot successfully booked:",
+              msg: "Timeslot successfully added:",
               Added: Timeslot_added.toJSON(),
             });
           } catch (error) {
