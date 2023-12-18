@@ -21,8 +21,8 @@ const login = async (req, res) => {
             // Student found, generate JWT and set cookie
             console.log("Student logged in:", user.toJSON());
             const token = jwt.sign({ email_address: user.email_address }, process.env.SECRET);
-            res.cookie("token", token, { httpOnly: true });
-            return res.status(200).send("Student logged in");
+            res.cookie("Stoken", token, { httpOnly: true });
+            return res.status(200).json({ userType: "Stoken", message: "Student logged in" });
         }
         /*
     Sequelize Raw Query for checking login credentials in the Healthcare_professional table
@@ -38,8 +38,8 @@ const login = async (req, res) => {
             // Healthcare professional found, generate JWT and set cookie
             console.log("Healthcare professional logged in:", user.toJSON());
             const token = jwt.sign({ email_address: user.email_address }, process.env.SECRET);
-            res.cookie("token", token, { httpOnly: true });
-            return res.status(200).send("Healthcare professional logged in");
+            res.cookie("HCPtoken", token, { httpOnly: true });
+            return res.status(200).json({ userType: "HCPtoken", message: "Healthcare professional logged in" });
         }
 
         // If not found in either table, return error message

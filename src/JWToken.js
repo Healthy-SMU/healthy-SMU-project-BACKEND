@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const cookieParser = require('cookie-parser');
 // Define the session checking middleware if non valid session end request with code and redirection to login
 const checkJwtToken = function (req, res, next) {
-  const jwttoken = req.cookies.token;
+  const jwttoken = req.cookies.Stoken || req.cookies.HCPtoken;
   //regular expression to check if path is towards login/signup
   const isLoginOrSignup = /\/(login|signup)/.test(req.path);
 
